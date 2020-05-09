@@ -365,7 +365,7 @@ install_newrelic_userini
 
 install_blackfire_agent
 
-source $BP_DIR/bin/phalcon
+source $BP_DIR/bin/grpc
 
 if [[ ! -f "Procfile" ]]; then
     bindir=$(composer config bin-dir 2> /dev/null | tail -n 1) # tail, as composer echos outdated version warnings to STDOUT

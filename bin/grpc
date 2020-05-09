@@ -1,0 +1,27 @@
+#!/bin/bash
+# Build Path: /app/.heroku/php/
+dep_url=git://github.com/grpc/grpc.git
+grpc_dir=cgrpc
+echo "-----> Building gRPC..."
+
+### gRPC
+echo "[LOG] Downloading gRPCPHP"
+git clone $dep_url -q
+if [ ! -d "$grpc_dir" ]; then
+  echo "[ERROR] Failed to find grpcphp directory $grpc_dir"
+  exit
+fi
+cd $grpc_dir/build
+
+# /app/php/bin/phpize
+# ./configure --enable-grpc --with-php-config=$PHP_ROOT/bin/php-config
+# make
+# make install
+BUILD_DIR=$1
+ln -s $BUILD_DIR/.heroku /app/.heroku
+export PATH=/app/.heroku/php/bin:$PATH
+bash ./install
+cd
+echo "important extension grpc into php.ini"
+echo "extension=grpc.so" >> /app/.heroku/php/etc/php/php.ini
+
